@@ -7,7 +7,7 @@ This project summarizes Accounts Receivable (A/R) at the **customer level** and 
 **Dataset:** 1,000 invoices across 5 customers  
 **Tools:** Excelx Accounting Data Generator (data generation) → MySQL 8.0 (analysis)  
 **Output:** total unpaid balance, % invoices paid, aging bucket counts, and risk level per customer
-**Execution Time:** 1.69 ms
+**Execution Time:** 4.79 ms
 
 ---
 
@@ -67,14 +67,14 @@ The dataset was created using **ExcelX Finance & Accounting Data Generator**, ex
 Risk is assigned using overdue **amounts** and exposure **ratios**:
 
 ### High risk (any condition)
-- 365+ overdue dollars ≥ 75,000
-- 181–365 overdue dollars ≥ 60,000
-- Total exposure ≥ 8 “invoice-equivalents” (total_due / avg_invoice_size)
+- 365+ overdue dollars ≥ 400000
+- 181–365 overdue dollars ≥ 300,000
+- Total exposure ≥ 35 “invoice-equivalents” (total_due / avg_invoice_size)
 
 ### Medium risk (any condition)
-- 91–180 overdue dollars ≥ 35,000
-- 31–180 overdue invoice count ≥ 4
-- Total exposure ≥ 5 “invoice-equivalents”
+- 91–180 overdue dollars ≥ 200000
+- 31–180 overdue invoice count ≥ 9
+- Total exposure ≥ 22 “invoice-equivalents”
 
 Else: Low
 
@@ -83,24 +83,25 @@ Else: Low
 ---
 
 ##  Output
-| Customer | total_due | invoices_paid_percent | cnt_181_365 | cnt_365_higher | risk_level |
-|---|---:|---:|---:|---:|---|
-| Retail Giant A | 245,847.04 | 77.50 | 3 | 6 | High |
-| Gourmet Shop C | 187,274.82 | 79.41 | 0 | 6 | High |
-| Supermarket Chain B | 142,222.42 | 84.31 | 2 | 2 | Medium |
-| Online Retailer D | 110,838.95 | 89.19 | 2 | 0 | High |
-| Hotel Group E | 55,622.10 | 92.11 | 3 | 0 | Low |
+| Customer | Total Due | % Paid | Current | 1–30 | 31–60 | 61–90 | 91–120 | 121–180 | 181–365 | 365+ | Risk |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| Retail Giant A | 796,491.38 | 84.34 | 1 | 0 | 4 | 0 | 1 | 4 | 11 | 10 | Medium |
+| Gourmet Shop C | 790,469.80 | 84.66 | 0 | 1 | 3 | 1 | 1 | 2 | 9 | 10 | Medium |
+| Supermarket Chain B | 731,030.98 | 88.16 | 1 | 0 | 0 | 0 | 0 | 2 | 8 | 16 | High |
+| Online Retailer D | 688,251.73 | 86.06 | 1 | 0 | 2 | 1 | 1 | 4 | 8 | 12 | Medium |
+| Hotel Group E | 424,176.34 | 89.47 | 2 | 1 | 1 | 3 | 0 | 1 | 5 | 7 | Low |
 
 ---
 
 ## Key Business Insights
-**Portfolio Summary:** $741,805 total outstanding across 5 customers  
-**Risk Distribution:** 3 High-risk | 1 Medium-risk | 1 Low-risk customers  
-**Critical Alert:** 14 invoices over 180 days overdue requiring immediate attention
+**Portfolio Summary:** $3,430,420 total outstanding across 5 customers  
+**Risk Distribution:** 1 High-risk | 3 Medium-risk | 1 Low-risk customers  
+**Critical Alert:** 78 invoices over 180 days overdue requiring immediate attention
 **Top Priorities:**
-- **Retail Giant A** and **Gourmet Shop C** each have 6 invoices >365 days overdue
-- **High-risk customers** represent 69% of total receivables ($544,961)
-- **Hotel Group E** shows best payment behavior (92% paid rate) - potential model customer
+- **Supermarket Chain B** was flagged as the **highest-risk** account with **16 invoices >365 days overdue**, indicating severe long-term delinquency and urgent collections risk.
+- **Retail Giant A** and **Gourmet Shop C** each contain **10 invoices >365 days overdue**, making them key targets for immediate collections follow-up and credit review.
+- **A/R exposure is concentrated:** the single **High-risk** customer represents **$731,030.98** (~21.3% of total receivables), creating material portfolio-level risk.
+- **Hotel Group E** demonstrates the strongest payment behavior (**89.47% paid rate**) and is labeled **Low risk**, suggesting reduced collections urgency and more stable cash flow behavior.
 
 ---
 
@@ -111,7 +112,7 @@ Else: Low
 
 ---
 
-## Next Steps (Optional Enhancements)
+## Next Steps
 - Add dollar totals per aging bucket (not just counts)
 - Build a Power BI dashboard using the output table
 - Analyze Monthly data, such as AR collected per month
