@@ -59,16 +59,16 @@ Overdue invoices are grouped into standard aging buckets:
 Customer risk is assigned using threshold rules (not machine learning).
 
 ### High Risk triggers (any one):
-- Total overdue amount for invoices **365+ days** past due ≥ **$75,000**, OR
-- Total overdue amount for invoices **181–365 days** past due ≥ **$60,000**, OR
-- Customer exposure ≥ **8 invoice-equivalents**, calculated as:
+- Total overdue amount for invoices **365+ days** past due ≥ **$400,000**, OR
+- Total overdue amount for invoices **181–365 days** past due ≥ **$300,000**, OR
+- Customer exposure ≥ **35 invoice-equivalents**, calculated as:
 
   `total_due / avg_invoice_size`
 
 ### Medium Risk triggers (any one):
-- Total overdue amount across **91–180 days** ≥ **$35,000**, OR
-- Total overdue invoice count across **31–180 days** ≥ **4 invoices**, OR
-- Customer exposure ≥ **5 invoice-equivalents**
+- Total overdue amount across **91–180 days** ≥ **$200,000**, OR
+- Total overdue invoice count across **31–180 days** ≥ **9 invoices**, OR
+- Customer exposure ≥ **22 invoice-equivalents**
 
 ### Low Risk:
 - Customers not meeting High or Medium thresholds are labeled Low risk.
